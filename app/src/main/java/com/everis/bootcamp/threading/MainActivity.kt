@@ -13,22 +13,70 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        //TODO: 018 - fazer o handle do clique do botão
+        //TODOà: 018 - fazer o handle do clique do botão
+        btn_load_data.setOnClickListener {
+            lauchAstroTask()
+        }
     }
 
 
-    //TODO: 013 - Criar função para exibir os dados carregados
+    //TODàO: 013 - Criar função para exibir os dados carregados
+
+    fun ShowData(list:List<AstrosPeople>){
+        tv_data.text = ""
+        list?.forEach { people ->
+            tv_data.append("${people.name} - ${people.craft} \n \n")
+
+        }
+
+    }
 
 
-    //TODO: 014 - Criar função para exibir a ProgressBar
+    //TOD0O: 014 - Criar função para exibir a ProgressBar
+    //TODO0: 015 - Criar função para esconder a ProgressBar
+    fun showLoadingIndicator(boolean: Boolean) {
+        if (boolean) pb_load_indicator.visibility = View.VISIBLE else pb_load_indicator.visibility = View.GONE
+    }
 
 
-    //TODO: 015 - Criar função para esconder a ProgressBar
 
 
-    //TODO: 017 - Criar função para lançar a Task
+
+    //TODàO: 017 - Criar função para lançar a Task
+
+    fun lauchAstroTask(){
+        val task = TaskAstros()
+        task.execute()
+    }
 
 
-    //TODO: 016 - Criar classe interna para rodar a tarefa assincrona
+    //TODOà: 016 - Criar classe interna para rodar a tarefa assincrona
+    //inner class eh uma classe dentro de outra, esta herda os metodos
+    //da classe em que ela esta inserida
+    inner class TaskAstros(): AsyncTask<Void,Int, List<AstrosPeople>>(){
+        val repository = AstrosRepository()
+
+        //executa antes de rodar o codigo principal
+        override fun onPreExecute() {
+            super.onPreExecute()
+            showLoadingIndicator(true)
+        }
+
+        override fun doInBackground(vararg p0: Void?): List<AstrosPeople> = repository.loadData()
+
+
+        override fun onPostExecute(result: List<AstrosPeople>) {
+            super.onPostExecute(result)
+            showLoadingIndicator(false)
+            ShowData(result)
+        }
+
+
+
+
+
+
+    }
+
 
 }

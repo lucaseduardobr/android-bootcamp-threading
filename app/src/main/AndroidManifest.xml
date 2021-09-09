@@ -2,10 +2,19 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="com.everis.bootcamp.threading">
 
-    <!--TODO: 001 Incluir a permissão de internet -->
+    <!--TODO0: 001 Incluir a permissão de internet -->
 
-    <!-- TODO: 019 Incluir a propriedade android:usesCleartextTraffic="true" para requisição http-->
+    <uses-permission android:name="android.permission.INTERNET"/>
+
+    <!-- TODàO: 019 Incluir a propriedade android:usesCleartextTraffic="true" para requisição
+    acontece que o http nao eh criptografado, ele nao eh mt aceito, como nossa requisicao eh em
+    http e nao criptografado como https precisamos explicitar isso logo abaixo
+    -->
+
+
+
     <application
+            android:usesCleartextTraffic="true"
             android:allowBackup="true"
             android:icon="@mipmap/ic_launcher"
             android:label="@string/app_name"
